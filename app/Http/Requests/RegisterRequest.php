@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rules\Password;
 
 class RegisterRequest extends FormRequest
@@ -40,5 +42,23 @@ class RegisterRequest extends FormRequest
             'password.required' => 'The password field is required.',
             'password.confirmed' => 'The password confirmation does not match.',
         ];
+    }
+
+    /**
+     * Handle a failed validation attempt.
+     */
+    protected function failedValidation(Validator $validator): void
+    {
+        if ($this->expectsJson() || $this->is('api/*')) {
+            throw new HttpResponseException(
+                response()->json([
+                    'success' => false,
+                    'message' => 'The given data was invalid.',
+                    'errors' => $validator->errors(),
+                ], 422)
+            );
+        }
+
+        parent::failedValidation($validator);
     }
 }
