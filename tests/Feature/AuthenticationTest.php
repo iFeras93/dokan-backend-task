@@ -15,8 +15,7 @@ class AuthenticationTest extends TestCase
 
     #region test for register scenarios
 
-    /** @test */
-    public function user_can_register_with_valid_data(): void
+    public function test_user_can_register_with_valid_data(): void
     {
         $userData = [
             'name' => $this->faker->name,
@@ -44,8 +43,7 @@ class AuthenticationTest extends TestCase
         ]);
     }
 
-    /** @test */
-    public function user_cannot_register_with_invalid_data(): void
+    public function test_user_cannot_register_with_invalid_data(): void
     {
         $response = $this->postJson(self::BASE_URL . '/auth/register', []);
 
@@ -53,8 +51,7 @@ class AuthenticationTest extends TestCase
             ->assertJsonValidationErrors(['name', 'email', 'password']);
     }
 
-    /** @test */
-    public function user_cannot_register_with_existing_email(): void
+    public function test_user_cannot_register_with_existing_email(): void
     {
         $existingUser = User::factory()->create();
 
@@ -72,8 +69,7 @@ class AuthenticationTest extends TestCase
 
 
     #region test for login scenarios
-    /** @test */
-    public function user_can_login_with_valid_credentials(): void
+    public function test_user_can_login_with_valid_credentials(): void
     {
         $user = User::factory()->create([
             'password' => Hash::make('password123'),
@@ -96,8 +92,7 @@ class AuthenticationTest extends TestCase
             ]);
     }
 
-    /** @test */
-    public function user_cannot_login_with_invalid_credentials(): void
+    public function test_user_cannot_login_with_invalid_credentials(): void
     {
         $user = User::factory()->create([
             'password' => Hash::make('password123'),
@@ -113,8 +108,7 @@ class AuthenticationTest extends TestCase
     #endregion
 
 
-    /** @test */
-    public function authenticated_user_can_get_user_info(): void
+    public function test_authenticated_user_can_get_user_info(): void
     {
         $user = User::factory()->create();
 
@@ -142,8 +136,7 @@ class AuthenticationTest extends TestCase
             ]);
     }
 
-    /** @test */
-    public function unauthenticated_user_cannot_access_protected_routes(): void
+    public function test_unauthenticated_user_cannot_access_protected_routes(): void
     {
         $response = $this->getJson(self::BASE_URL . '/auth/user');
         $response->assertUnauthorized();
