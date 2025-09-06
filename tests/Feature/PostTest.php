@@ -124,4 +124,17 @@ class PostTest extends TestCase
             'post_id' => $post->id,
         ]);
     }
+    public function test_unauthenticated_user_cannot_add_comment_to_post(): void
+    {
+        $post = Post::factory()->create([
+            'user_id' => $this->user->id,
+            'category_id' => $this->category->id,
+        ]);
+
+        $response = $this->postJson(self::BASE_URL . "/posts/{$post->id}/comments", [
+            'content' => 'This is a test comment.',
+        ]);
+
+       $response->assertStatus(401);
+    }
 }
