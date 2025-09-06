@@ -9,7 +9,7 @@ operations with proper authentication and testing.
 
 ### Import Collection
 
-1. Download the Postman collection from the repository
+1. Download the Postman collection from the repository it's named ``Tasks-Dokan Backend Assignment.postman_collection.json``
 2. Import into Postman
 3. Set up environment variables:
    - `baseUrl`: `http://localhost:8000/api/v1`
