@@ -4,6 +4,7 @@
 A comprehensive Laravel application for implement models, relationships, and basic CRUD
 operations with proper authentication and testing.
 
+after cloning the project please don't forget to run ``php artisan key:generate`` to completing the project setup.
 
 ## 🧪 Testing with Postman
 
